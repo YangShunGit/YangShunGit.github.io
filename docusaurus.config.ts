@@ -6,9 +6,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: '个人知识库',
-  tagline: 'Dinosaurs are cool',
+  tagline: '一名前端开发者整理的技术小册',
   favicon: 'img/favicon.ico',
-
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
@@ -43,6 +42,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          path: 'frontend',
+          routeBasePath: 'frontend',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -69,26 +70,50 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'backend',
+        path: 'backend',
+        routeBasePath: 'backend',
+        sidebarPath: './sidebarsBackend.ts',
+        // ... other options
+      }, 
+    ],
+  ],
 
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: '智库',
       logo: {
-        alt: 'My Site Logo',
+        alt: '个人智库',
         src: 'img/logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'frontend',
           position: 'left',
-          label: 'Tutorial',
+          label: '前端',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          to: '/backend/intro',
+          label: '后端',
+          position: 'left',
+          activeBaseRegex: `/backend`,
+        },
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'communitySidebar',
+        //   position: 'left',
+        //   label: '后端',
+        // },
+        {to: '/blog', label: '博客', position: 'left'},
+        {
+          href: 'https://github.com/YangShunGit/YangShunGit.github.io',
           label: 'GitHub',
           position: 'right',
         },
@@ -98,28 +123,40 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: '文档',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: '前端',
+              to: '/frontend/intro',
+            },
+            {
+              label: '后端',
+              to: '/backend/intro',
             },
           ],
         },
         {
-          title: 'Community',
+          title: '常用网站',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'react',
+              href: 'https://react.docschina.org/',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'antd',
+              href: 'https://ant-design.antgroup.com/components/overview-cn',
             },
             {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'react-native',
+              href: 'https://www.react-native.cn/',
+            },
+            {
+              label: 'taro',
+              href: 'https://docs.taro.zone/docs/',
+            },
+            {
+              label: '微信小程序',
+              href: 'https://developers.weixin.qq.com/miniprogram/dev/framework/',
             },
           ],
         },
@@ -127,12 +164,12 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
+              label: '博客',
               to: '/blog',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/YangShunGit/YangShunGit.github.io',
             },
           ],
         },
