@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkys_blog=self.webpackChunkys_blog||[]).push([[8238],{4950:e=>{e.exports=JSON.parse('{"tag":{"label":"Releases","permalink":"/docs/tags/releases","allTagsPath":"/docs/tags","count":1,"items":[{"id":"greeting","title":"Hello from Docusaurus","description":"Create a doc page with rich content.","permalink":"/docs/greeting"}],"unlisted":false}}')}}]);
