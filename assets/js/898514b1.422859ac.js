@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkys_blog=self.webpackChunkys_blog||[]).push([[9067],{9187:s=>{s.exports=JSON.parse('{"tags":[{"label":"Releases","permalink":"/docs/tags/releases","count":1},{"label":"Docusaurus","permalink":"/docs/tags/docusaurus","description":"Docs related to the Docusaurus framework","count":1}]}')}}]);
