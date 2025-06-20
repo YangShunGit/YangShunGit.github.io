@@ -1,0 +1,8 @@
+{
+  "label": "http",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "http、缓存等浏览器知识。"
+  }
+}
