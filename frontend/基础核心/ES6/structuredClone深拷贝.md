@@ -1,4 +1,4 @@
-你提到的是 **`structuredClone()` 方法**，这是现代浏览器（Chrome 98+、Firefox 94+、Safari 15.4+）提供的原生深拷贝 API，支持**流对象（ReadableStream/WritableStream）**和**更多复杂数据类型**，且**自动处理循环引用**。以下是详细介绍：
+这是现代浏览器（Chrome 98+、Firefox 94+、Safari 15.4+）提供的原生深拷贝 API，支持**流对象（ReadableStream/WritableStream）**和**更多复杂数据类型**，且**自动处理循环引用**。以下是详细介绍：
 
 
 ### **一、`structuredClone()` 基本用法**
