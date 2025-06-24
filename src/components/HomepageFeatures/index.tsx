@@ -24,7 +24,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        整理一些实用组件的示例代码，包含支持虚拟列表的瀑布流组件、打字效果hook等，在线查看效果
+        整理一些实用组件的示例代码，包含<a href="/waterfall">支持虚拟列表且高度自适应的瀑布流组件</a>、打字效果hook等，在线查看效果
       </>
     ),
   },

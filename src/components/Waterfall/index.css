@@ -1,0 +1,8 @@
+.waterfall {
+  position: relative;
+  overflow: auto;
+  height: 100vh;
+}
+.waterfall::-webkit-scrollbar{
+    width: 0;
+}
