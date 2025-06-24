@@ -1,4 +1,4 @@
-import type {ReactNode} from 'react';
+import {useState, type ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -7,16 +7,24 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
+import { useTyping } from '../hooks/useTyping';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
+  const [desc, setDesc] = useState('');
+
+  const {typingContent: title}  = useTyping({enabled: true, content: siteConfig.title, interval: 150, step: 1, onTypingComplete: () => {
+    setDesc(siteConfig.tagline);
+  }})
+  const {typingContent: tagline }  = useTyping({enabled: true, content: desc, interval: 150, step: 1})
+  
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
-          {siteConfig.title}
+          {title as string}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className="hero__subtitle">{tagline as string}</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
