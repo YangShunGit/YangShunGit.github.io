@@ -35,7 +35,7 @@ export default () => {
   return <Waterfall
       style={{background: 'white'}}
       className={'my-waterfall'}
-      initialNumToRender={20}
+      initialNumToRender={50}
       pageSize={20}
       columns={5}
       gapX={20}
