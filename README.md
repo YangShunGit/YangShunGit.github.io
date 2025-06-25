@@ -1,4 +1,7 @@
-# [Website](https://yangshungit.github.io/)
+
+# [智库](https://yangshungit.github.io/)
+
+[![Deploy to GitHub Pages](https://github.com/YangShunGit/YangShunGit.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/YangShunGit/YangShunGit.github.io/actions/workflows/deploy.yml)
 
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
