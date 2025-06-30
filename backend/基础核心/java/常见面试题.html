@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-backend docs-version-current docs-doc-page docs-doc-id-基础核心/java/常见面试题" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">常见面试题 | 个人知识库</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://YangShunGit.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://YangShunGit.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://YangShunGit.github.io/backend/基础核心/java/常见面试题"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-backend-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-backend-current"><meta data-rh="true" property="og:title" content="常见面试题 | 个人知识库"><meta data-rh="true" name="description" content="以下是一些常见的Java面试题及解答思路，涵盖基础知识、高级特性、框架和项目经验等方面："><meta data-rh="true" property="og:description" content="以下是一些常见的Java面试题及解答思路，涵盖基础知识、高级特性、框架和项目经验等方面："><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://YangShunGit.github.io/backend/基础核心/java/常见面试题"><link data-rh="true" rel="alternate" href="https://YangShunGit.github.io/backend/基础核心/java/常见面试题" hreflang="en"><link data-rh="true" rel="alternate" href="https://YangShunGit.github.io/backend/基础核心/java/常见面试题" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"常见面试题","item":"https://YangShunGit.github.io/backend/基础核心/java/常见面试题"}]}</script><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="个人知识库 RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="个人知识库 Atom Feed"><link rel="stylesheet" href="/assets/css/styles.a03a9115.css">
+<script src="/assets/js/runtime~main.b1e56e3a.js" defer="defer"></script>
+<script src="/assets/js/main.d0bf1ac5.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/logo.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.svg" alt="个人智库" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="个人智库" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">智库</b></a><a class="navbar__item navbar__link" href="/frontend/intro">前端</a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/backend/intro">后端</a><a class="navbar__item navbar__link" href="/blog">博客</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/YangShunGit/YangShunGit.github.io" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/backend/intro">Tutorial Intro</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/backend/greeting">Hello from Docusaurus</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/backend/spring/springboot/AOP">spring</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/backend/基础核心/java/基础">基础核心</a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" tabindex="0" href="/backend/基础核心/java/基础">java</a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/backend/基础核心/java/基础">基础</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/backend/基础核心/java/常见面试题">常见面试题</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/backend/基础核心/java/知识点整理">知识点整理</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/backend/基础核心/java/进阶">进阶</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/backend/基础核心/java/高级">高级</a></li></ul></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/backend/数据库/mybatis">数据库</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/backend/方案设计/单点登录">方案设计</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/backend/消息队列/kafka">消息队列</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/backend/缓存中间件/redis/缓存问题">缓存中间件</a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">基础核心</span></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">java</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">常见面试题</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>常见面试题</h1></header><p>以下是一些常见的Java面试题及解答思路，涵盖基础知识、高级特性、框架和项目经验等方面：</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="一基础知识"><strong>一、基础知识</strong><a href="#一基础知识" class="hash-link" aria-label="Direct link to 一基础知识" title="Direct link to 一基础知识">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-面向对象编程oop"><strong>1. 面向对象编程（OOP）</strong><a href="#1-面向对象编程oop" class="hash-link" aria-label="Direct link to 1-面向对象编程oop" title="Direct link to 1-面向对象编程oop">​</a></h3>
+<p><strong>问题</strong>：什么是面向对象编程？Java有哪些特性体现了OOP？<br>
+<strong>解答思路</strong>：</p>
+<ul>
+<li>核心概念：封装、继承、多态、抽象。</li>
+<li>结合Java代码举例：<!-- -->
+<ul>
+<li><strong>封装</strong>：通过<code>private</code>修饰符隐藏类的内部状态，提供<code>public</code>方法访问。</li>
+<li><strong>继承</strong>：使用<code>extends</code>关键字实现类的复用。</li>
+<li><strong>多态</strong>：通过接口或抽象类实现方法的动态绑定（如<code>List list = new ArrayList()</code>）。</li>
+<li><strong>抽象</strong>：使用<code>abstract</code>关键字定义抽象类或方法。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-stringstringbuilderstringbuffer的区别"><strong>2. String、StringBuilder、StringBuffer的区别</strong><a href="#2-stringstringbuilderstringbuffer的区别" class="hash-link" aria-label="Direct link to 2-stringstringbuilderstringbuffer的区别" title="Direct link to 2-stringstringbuilderstringbuffer的区别">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>String</strong>：不可变对象，每次操作都会生成新对象，适合少量字符串操作。</li>
+<li><strong>StringBuilder</strong>：可变对象，非线程安全，性能高（推荐在单线程环境使用）。</li>
+<li><strong>StringBuffer</strong>：可变对象，线程安全（内部方法用<code>synchronized</code>修饰），性能低。</li>
+<li><strong>场景选择</strong>：循环中拼接字符串用<code>StringBuilder</code>，多线程环境用<code>StringBuffer</code>。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="3-自动装箱与拆箱"><strong>3. 自动装箱与拆箱</strong><a href="#3-自动装箱与拆箱" class="hash-link" aria-label="Direct link to 3-自动装箱与拆箱" title="Direct link to 3-自动装箱与拆箱">​</a></h3>
+<p><strong>问题</strong>：解释<code>Integer i = 10</code>和<code>int j = i</code>的过程。<br>
+<strong>解答思路</strong>：</p>
+<ul>
+<li><strong>装箱</strong>：<code>Integer i = 10</code> 等价于 <code>Integer i = Integer.valueOf(10)</code>。</li>
+<li><strong>拆箱</strong>：<code>int j = i</code> 等价于 <code>int j = i.intValue()</code>。</li>
+<li><strong>注意点</strong>：<code>Integer</code>缓存池（默认范围<code>-128~127</code>），如<code>Integer a = 100; Integer b = 100; a==b</code>返回<code>true</code>。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="二集合框架"><strong>二、集合框架</strong><a href="#二集合框架" class="hash-link" aria-label="Direct link to 二集合框架" title="Direct link to 二集合框架">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-hashmap的工作原理java-8"><strong>1. HashMap的工作原理（Java 8+）</strong><a href="#1-hashmap的工作原理java-8" class="hash-link" aria-label="Direct link to 1-hashmap的工作原理java-8" title="Direct link to 1-hashmap的工作原理java-8">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>数据结构</strong>：数组+链表+红黑树（当链表长度≥8且数组长度≥64时，链表转为红黑树）。</li>
+<li><strong>put过程</strong>：<!-- -->
+<ol>
+<li>计算key的hash值，定位数组索引。</li>
+<li>若索引位置为空，直接插入；否则遍历链表/红黑树，存在相同key则覆盖，否则插入。</li>
+</ol>
+</li>
+<li><strong>扩容机制</strong>：当元素数量超过阈值（容量×负载因子，默认0.75）时，数组扩容为原来的2倍。</li>
+<li><strong>线程安全</strong>：非线程安全，多线程环境用<code>ConcurrentHashMap</code>。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-arraylist-vs-linkedlist"><strong>2. ArrayList vs LinkedList</strong><a href="#2-arraylist-vs-linkedlist" class="hash-link" aria-label="Direct link to 2-arraylist-vs-linkedlist" title="Direct link to 2-arraylist-vs-linkedlist">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>底层结构</strong>：<!-- -->
+<ul>
+<li><code>ArrayList</code>：动态数组，支持随机访问（<code>O(1)</code>），插入/删除效率低（<code>O(n)</code>）。</li>
+<li><code>LinkedList</code>：双向链表，插入/删除效率高（<code>O(1)</code>），随机访问效率低（<code>O(n)</code>）。</li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：频繁随机访问用<code>ArrayList</code>，频繁插入删除用<code>LinkedList</code>。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="三多线程与并发"><strong>三、多线程与并发</strong><a href="#三多线程与并发" class="hash-link" aria-label="Direct link to 三多线程与并发" title="Direct link to 三多线程与并发">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-synchronized与reentrantlock的区别"><strong>1. synchronized与ReentrantLock的区别</strong><a href="#1-synchronized与reentrantlock的区别" class="hash-link" aria-label="Direct link to 1-synchronized与reentrantlock的区别" title="Direct link to 1-synchronized与reentrantlock的区别">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>语法层面</strong>：<!-- -->
+<ul>
+<li><code>synchronized</code>：Java内置关键字，自动释放锁（代码块/方法结束时）。</li>
+<li><code>ReentrantLock</code>：JDK类，需手动调用<code>lock()</code>和<code>unlock()</code>。</li>
+</ul>
+</li>
+<li><strong>功能特性</strong>：<!-- -->
+<ul>
+<li><code>ReentrantLock</code>：可中断锁、公平锁、尝试锁（<code>tryLock()</code>）。</li>
+</ul>
+</li>
+<li><strong>性能</strong>：<!-- -->
+<ul>
+<li>JDK 6+对<code>synchronized</code>优化（偏向锁、轻量级锁），性能接近<code>ReentrantLock</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-线程池的核心参数及工作流程"><strong>2. 线程池的核心参数及工作流程</strong><a href="#2-线程池的核心参数及工作流程" class="hash-link" aria-label="Direct link to 2-线程池的核心参数及工作流程" title="Direct link to 2-线程池的核心参数及工作流程">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>核心参数</strong>（<code>ThreadPoolExecutor</code>）：<!-- -->
+<ul>
+<li><code>corePoolSize</code>：核心线程数。</li>
+<li><code>maximumPoolSize</code>：最大线程数。</li>
+<li><code>workQueue</code>：任务队列（如<code>LinkedBlockingQueue</code>）。</li>
+<li><code>keepAliveTime</code>：空闲线程存活时间。</li>
+<li><code>RejectedExecutionHandler</code>：拒绝策略（如<code>AbortPolicy</code>）。</li>
+</ul>
+</li>
+<li><strong>工作流程</strong>：<!-- -->
+<ol>
+<li>提交任务，若核心线程未满，创建新线程执行。</li>
+<li>若核心线程已满，任务入队。</li>
+<li>若队列已满且线程数未达最大，创建新线程执行。</li>
+<li>若线程数已达最大，触发拒绝策略。</li>
+</ol>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="四jvm底层原理"><strong>四、JVM底层原理</strong><a href="#四jvm底层原理" class="hash-link" aria-label="Direct link to 四jvm底层原理" title="Direct link to 四jvm底层原理">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-jvm内存区域划分"><strong>1. JVM内存区域划分</strong><a href="#1-jvm内存区域划分" class="hash-link" aria-label="Direct link to 1-jvm内存区域划分" title="Direct link to 1-jvm内存区域划分">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>堆（Heap）</strong>：存储对象实例，线程共享，可分为新生代（Eden、Survivor）和老年代。</li>
+<li><strong>栈（Stack）</strong>：存储局部变量和方法调用帧，线程私有。</li>
+<li><strong>方法区（Method Area）</strong>：存储类信息、常量池等，线程共享（Java 8后改为元空间MetaSpace）。</li>
+<li><strong>程序计数器（PC Register）</strong>：记录当前线程执行的字节码行号。</li>
+<li><strong>本地方法栈（Native Method Stack）</strong>：为Native方法服务。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-垃圾回收gc机制"><strong>2. 垃圾回收（GC）机制</strong><a href="#2-垃圾回收gc机制" class="hash-link" aria-label="Direct link to 2-垃圾回收gc机制" title="Direct link to 2-垃圾回收gc机制">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>可达性分析</strong>：从GC Roots（如栈变量、静态变量）出发，标记不可达对象。</li>
+<li><strong>垃圾收集算法</strong>：<!-- -->
+<ul>
+<li>标记-清除（Mark-Sweep）：产生内存碎片。</li>
+<li>标记-整理（Mark-Compact）：避免碎片。</li>
+<li>复制（Copying）：新生代常用（Eden<!-- -->:Survivor<!-- -->=8:1:1）。</li>
+</ul>
+</li>
+<li><strong>垃圾收集器</strong>：<!-- -->
+<ul>
+<li>新生代：Serial、ParNew、Parallel Scavenge。</li>
+<li>老年代：CMS、Serial Old、Parallel Old。</li>
+<li>全堆：G1、ZGC。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="五框架与工具"><strong>五、框架与工具</strong><a href="#五框架与工具" class="hash-link" aria-label="Direct link to 五框架与工具" title="Direct link to 五框架与工具">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-spring框架的核心特性"><strong>1. Spring框架的核心特性</strong><a href="#1-spring框架的核心特性" class="hash-link" aria-label="Direct link to 1-spring框架的核心特性" title="Direct link to 1-spring框架的核心特性">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>IOC（控制反转）</strong>：通过XML或注解配置，由容器管理对象的创建和依赖注入。</li>
+<li><strong>AOP（面向切面编程）</strong>：通过动态代理（JDK或CGLIB）实现横切关注点（如日志、事务）。</li>
+<li><strong>事务管理</strong>：声明式事务（基于AOP）和编程式事务。</li>
+<li><strong>MVC</strong>：<code>DispatcherServlet</code>处理请求，<code>@Controller</code>和<code>@RequestMapping</code>注解。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-mybatis与hibernate的区别"><strong>2. MyBatis与Hibernate的区别</strong><a href="#2-mybatis与hibernate的区别" class="hash-link" aria-label="Direct link to 2-mybatis与hibernate的区别" title="Direct link to 2-mybatis与hibernate的区别">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>ORM程度</strong>：<!-- -->
+<ul>
+<li><strong>MyBatis</strong>：半ORM，需手动编写SQL，灵活控制查询。</li>
+<li><strong>Hibernate</strong>：全ORM，通过对象映射自动生成SQL，适合快速开发。</li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：<!-- -->
+<ul>
+<li>MyBatis：复杂SQL场景（如报表）。</li>
+<li>Hibernate：业务逻辑简单、对象关系复杂的场景。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="六项目经验与场景题"><strong>六、项目经验与场景题</strong><a href="#六项目经验与场景题" class="hash-link" aria-label="Direct link to 六项目经验与场景题" title="Direct link to 六项目经验与场景题">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-如何优化高并发系统"><strong>1. 如何优化高并发系统？</strong><a href="#1-如何优化高并发系统" class="hash-link" aria-label="Direct link to 1-如何优化高并发系统" title="Direct link to 1-如何优化高并发系统">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>前端</strong>：静态资源CDN、页面缓存、懒加载。</li>
+<li><strong>服务端</strong>：<!-- -->
+<ul>
+<li>负载均衡（Nginx、LVS）。</li>
+<li>异步处理（消息队列RabbitMQ/Kafka）。</li>
+<li>限流熔断（Sentinel、Hystrix）。</li>
+</ul>
+</li>
+<li><strong>存储层</strong>：<!-- -->
+<ul>
+<li>缓存（Redis）。</li>
+<li>分库分表（ShardingSphere）。</li>
+<li>读写分离。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-如何解决分布式事务问题"><strong>2. 如何解决分布式事务问题？</strong><a href="#2-如何解决分布式事务问题" class="hash-link" aria-label="Direct link to 2-如何解决分布式事务问题" title="Direct link to 2-如何解决分布式事务问题">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li><strong>刚性事务</strong>：2PC（两阶段提交）、3PC（三阶段提交）。</li>
+<li><strong>柔性事务</strong>：<!-- -->
+<ul>
+<li>TCC（Try-Confirm-Cancel）。</li>
+<li>补偿事务（Saga模式）。</li>
+<li>最终一致性（基于消息队列）。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="七算法与数据结构"><strong>七、算法与数据结构</strong><a href="#七算法与数据结构" class="hash-link" aria-label="Direct link to 七算法与数据结构" title="Direct link to 七算法与数据结构">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-手写快速排序"><strong>1. 手写快速排序</strong><a href="#1-手写快速排序" class="hash-link" aria-label="Direct link to 1-手写快速排序" title="Direct link to 1-手写快速排序">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<div class="language-java codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-java codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">public void quickSort(int[] arr, int left, int right) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    if (left &lt; right) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        int pivotIndex = partition(arr, left, right);</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        quickSort(arr, left, pivotIndex - 1);</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        quickSort(arr, pivotIndex + 1, right);</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    }</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">}</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">private int partition(int[] arr, int left, int right) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    int pivot = arr[right];</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    int i = left - 1;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    for (int j = left; j &lt; right; j++) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        if (arr[j] &lt;= pivot) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">            i++;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">            swap(arr, i, j);</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        }</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    }</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    swap(arr, i + 1, right);</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    return i + 1;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">}</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">private void swap(int[] arr, int i, int j) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    int temp = arr[i];</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    arr[i] = arr[j];</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    arr[j] = temp;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">}</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-设计lru缓存"><strong>2. 设计LRU缓存</strong><a href="#2-设计lru缓存" class="hash-link" aria-label="Direct link to 2-设计lru缓存" title="Direct link to 2-设计lru缓存">​</a></h3>
+<p><strong>解答思路</strong>：</p>
+<ul>
+<li>使用<code>LinkedHashMap</code>实现，重写<code>removeEldestEntry()</code>方法：</li>
+</ul>
+<div class="language-java codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-java codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">import java.util.LinkedHashMap;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">import java.util.Map;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">public class LRUCache&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    private final int capacity;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    public LRUCache(int capacity) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        super(capacity, 0.75f, true) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">            @Override</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">            protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">                return size() &gt; capacity;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">            }</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">        };</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    }</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">}</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="八总结"><strong>八、总结</strong><a href="#八总结" class="hash-link" aria-label="Direct link to 八总结" title="Direct link to 八总结">​</a></h3>
+<p>面试时需注意：</p>
+<ol>
+<li><strong>清晰表达思路</strong>：先解释概念，再结合代码或场景举例。</li>
+<li><strong>深入源码或原理</strong>：如HashMap的红黑树转换条件、synchronized的锁升级过程。</li>
+<li><strong>关联实际项目</strong>：用项目中的案例说明技术选择或问题解决过程。</li>
+<li><strong>对答如流的“高频题”</strong>：HashMap、多线程、JVM GC、Spring原理。</li>
+</ol></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/backend/基础核心/java/基础"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">基础</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/backend/基础核心/java/知识点整理"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">知识点整理</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#一基础知识" class="table-of-contents__link toc-highlight"><strong>一、基础知识</strong></a><ul><li><a href="#1-面向对象编程oop" class="table-of-contents__link toc-highlight"><strong>1. 面向对象编程（OOP）</strong></a></li><li><a href="#2-stringstringbuilderstringbuffer的区别" class="table-of-contents__link toc-highlight"><strong>2. String、StringBuilder、StringBuffer的区别</strong></a></li><li><a href="#3-自动装箱与拆箱" class="table-of-contents__link toc-highlight"><strong>3. 自动装箱与拆箱</strong></a></li><li><a href="#二集合框架" class="table-of-contents__link toc-highlight"><strong>二、集合框架</strong></a></li><li><a href="#1-hashmap的工作原理java-8" class="table-of-contents__link toc-highlight"><strong>1. HashMap的工作原理（Java 8+）</strong></a></li><li><a href="#2-arraylist-vs-linkedlist" class="table-of-contents__link toc-highlight"><strong>2. ArrayList vs LinkedList</strong></a></li><li><a href="#三多线程与并发" class="table-of-contents__link toc-highlight"><strong>三、多线程与并发</strong></a></li><li><a href="#1-synchronized与reentrantlock的区别" class="table-of-contents__link toc-highlight"><strong>1. synchronized与ReentrantLock的区别</strong></a></li><li><a href="#2-线程池的核心参数及工作流程" class="table-of-contents__link toc-highlight"><strong>2. 线程池的核心参数及工作流程</strong></a></li><li><a href="#四jvm底层原理" class="table-of-contents__link toc-highlight"><strong>四、JVM底层原理</strong></a></li><li><a href="#1-jvm内存区域划分" class="table-of-contents__link toc-highlight"><strong>1. JVM内存区域划分</strong></a></li><li><a href="#2-垃圾回收gc机制" class="table-of-contents__link toc-highlight"><strong>2. 垃圾回收（GC）机制</strong></a></li><li><a href="#五框架与工具" class="table-of-contents__link toc-highlight"><strong>五、框架与工具</strong></a></li><li><a href="#1-spring框架的核心特性" class="table-of-contents__link toc-highlight"><strong>1. Spring框架的核心特性</strong></a></li><li><a href="#2-mybatis与hibernate的区别" class="table-of-contents__link toc-highlight"><strong>2. MyBatis与Hibernate的区别</strong></a></li><li><a href="#六项目经验与场景题" class="table-of-contents__link toc-highlight"><strong>六、项目经验与场景题</strong></a></li><li><a href="#1-如何优化高并发系统" class="table-of-contents__link toc-highlight"><strong>1. 如何优化高并发系统？</strong></a></li><li><a href="#2-如何解决分布式事务问题" class="table-of-contents__link toc-highlight"><strong>2. 如何解决分布式事务问题？</strong></a></li><li><a href="#七算法与数据结构" class="table-of-contents__link toc-highlight"><strong>七、算法与数据结构</strong></a></li><li><a href="#1-手写快速排序" class="table-of-contents__link toc-highlight"><strong>1. 手写快速排序</strong></a></li><li><a href="#2-设计lru缓存" class="table-of-contents__link toc-highlight"><strong>2. 设计LRU缓存</strong></a></li><li><a href="#八总结" class="table-of-contents__link toc-highlight"><strong>八、总结</strong></a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">文档</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/frontend/intro">前端</a></li><li class="footer__item"><a class="footer__link-item" href="/backend/intro">后端</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">常用网站</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://react.docschina.org/" target="_blank" rel="noopener noreferrer" class="footer__link-item">react<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://ant-design.antgroup.com/components/overview-cn" target="_blank" rel="noopener noreferrer" class="footer__link-item">antd<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://www.react-native.cn/" target="_blank" rel="noopener noreferrer" class="footer__link-item">react-native<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://docs.taro.zone/docs/" target="_blank" rel="noopener noreferrer" class="footer__link-item">taro<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/" target="_blank" rel="noopener noreferrer" class="footer__link-item">微信小程序<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/blog">博客</a></li><li class="footer__item"><a href="https://github.com/YangShunGit/YangShunGit.github.io" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 My Project, Inc. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
