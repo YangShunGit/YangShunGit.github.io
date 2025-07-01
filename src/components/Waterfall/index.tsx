@@ -119,6 +119,8 @@ export const Cell = React.forwardRef(({index, columnWidth, screenRange, children
     return null;
   }
 
+  // 最右侧right需要设置为0
+  // 不可见元素用fixed定位
   
 
   return <div
@@ -208,7 +210,7 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
       const currentColumnsHeight = [...columnsHeight[currentIndex]];
       // console.warn('开始计算第', currentIndex, '个元素计算位置', currentColumnsHeight)
       if (!Array.isArray(currentColumnsHeight)) {
-        console.log(columnsHeight,currentIndex, currentColumnsHeight)
+        // console.log(columnsHeight,currentIndex, currentColumnsHeight)
       }
       let asceColumns = [...currentColumnsHeight]
       asceColumns.sort((a,b) => a - b);
@@ -249,7 +251,7 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
       console.warn('计算结束第', currentIndex, '个元素计算位置', stateRef.current.currentIndex, stateRef.current.rects[currentIndex],asceColumns, minColumnsIndex)
       computerRects();
     } else {
-      console.log(`${currentIndex}停止计算，Array.isArray(columnsHeight[currentIndex])=${Array.isArray(columnsHeight[currentIndex])}`)
+      // console.log(`${currentIndex}停止计算，Array.isArray(columnsHeight[currentIndex])=${Array.isArray(columnsHeight[currentIndex])}`)
     }
   }
 
@@ -257,7 +259,7 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   const refreshRects = () => {
     if (updateIndexQueue.current.length > 0) {
       updateIndexQueue.current.sort((a, b) => a - b);
-      console.log('更新队列updateIndexQueue.current', updateIndexQueue.current, heightCollect.current)
+      // console.log('更新队列updateIndexQueue.current', updateIndexQueue.current, heightCollect.current)
       stateRef.current.currentIndex = updateIndexQueue.current[0]
       stateRef.current.endIndex = updateIndexQueue.current[updateIndexQueue.current.length - 1];
       updateIndexQueue.current = [];
@@ -326,7 +328,7 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   const itemLoaded = (index: number) => {
     if (cellRefs.current[index] && heightCollect.current[index] === undefined) {
       const rect = cellRefs.current[index].getBoundingClientRect();
-      console.log('第',index,'个元素加载完成',rect, containerRect.current.columnWidth);
+      // console.log('第',index,'个元素加载完成',rect, containerRect.current.columnWidth);
       const scaleHeight = rect.width ? rect.height / rect.width * containerRect.current.columnWidth : 0;
       heightCollect.current[index] = {
         value: scaleHeight,
@@ -340,6 +342,8 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   // 列表项高度更新，重新计算瀑布流
   const itemUpdated = (index: number) => {
     if (index !==undefined && cellRefs.current[index]) {
+      // console.log('itemUpdated', index);
+      
       const rect = cellRefs.current[index].getBoundingClientRect();
       // console.log('itemUpdated', index ,rect, heightCollect.current[index]?.history)
       // const last = heightCollect.current[index].history[heightCollect.current[index].history.length - 1] !== rect.height
@@ -348,6 +352,7 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
         Array.isArray(heightCollect.current[index]?.history)
         && heightCollect.current[index].history[heightCollect.current[index].history.length - 1] !== rect.height
       ) {
+        console.log('itemUpdated runRefreshRects', index, heightCollect.current[index].history, rect);
         heightCollect.current[index].value = rect.height;
         heightCollect.current[index].history.push(rect.height);
         updateIndexQueue.current.push(index);
