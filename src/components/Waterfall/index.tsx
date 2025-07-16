@@ -119,7 +119,7 @@ export const Cell = React.forwardRef(({columnWidth, index, screenRange, children
  * @param {number} gapY - 垂直间隙
  * @param {number} pageSize - 分页加载每页加载条数,暂不支持
  */
-export const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
+ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   const {
     children,
     columns = 2,
@@ -367,3 +367,5 @@ export const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
       {childrens}
     </div>
 })
+
+export default Waterfall;
