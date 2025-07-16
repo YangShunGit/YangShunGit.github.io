@@ -43,7 +43,7 @@ export default () => {
       autoObserve={true}
     >
       {data.map((item, index) => {
-        return <DynamicHeightDiv item={`${item}?time=${new Date()}`} index={index}/>
+        return <DynamicHeightDiv item={`${item}?time=${Date.now()}`} index={index}/>
       })}
   </Waterfall>
 }
