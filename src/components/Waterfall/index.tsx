@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useRef, useImperativeHandle } from 'react'
+import React, { useEffect, useState, useRef, useImperativeHandle, useLayoutEffect } from 'react'
+import classNames from 'classnames'
 import { useThrottleFn } from 'ahooks'
 import './index.css'
+
 const classPrefix = `waterfall`
 
 export interface Rect {
   top?: number
   left?: number | string
-  width?: number
+  isLastColumn: boolean
   height?: number
-  // isInsideScreen: boolean
 }
 
 export interface WaterfallProps {
@@ -31,6 +32,7 @@ export interface WaterfallState {
 
 export interface WaterfallCellProps {
   index: number
+  columnWidth: number
   screenRange: ScreenRangeType
   children: React.ReactNode
   rect?: Rect
@@ -38,69 +40,26 @@ export interface WaterfallCellProps {
   itemUpdated: (index: number) => void
 }
 
-// 第三个参数为额外传入的每列宽度
 type ScreenRangeType = [number, number]
 
+
+
 // 列表项容器组件
-export const Cell = React.forwardRef(({index, columnWidth, screenRange, children, rect, itemLoaded, itemUpdated}: WaterfallCellProps, ref) => {
+export const Cell = React.forwardRef(({columnWidth, index, screenRange, children, rect, itemLoaded, itemUpdated}: WaterfallCellProps, ref) => {
 
   let cellRef= useRef<HTMLDivElement>(null);
 
-  // 自动监听瀑布流元素变化
-  // const onObserver = (mutationsList: MutationRecord[], observer: MutationObserver) => {
-  //   // console.log('mutationsList', mutationsList)
-  //   for (let mutation of mutationsList) {
-  //     if (mutation.target.parentElement?.className !== classPrefix) {
-  //       // itemUpdated(index)
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     itemLoaded(index)
-    
   }, [])
 
-  useEffect(()=> {
-    // console.log('rect变化', index, rect)
-  }, [rect])
-
-  // useEffect(() => {
-  //   if (cellRef.current) {
-  //     console.warn('建立监听', index)
-  //     const observer = new MutationObserver(onObserver as MutationCallback);
-  //     observer.observe(cellRef.current, { subtree: true, childList: true, attributeOldValue: true, attributes: true });
-  //     return () => observer.disconnect();
-  //   }
-  // }, [cellRef.current])
-
   useEffect(() => {
-    // console.log('建立监听', index, cellRef.current)
-    let ro = null;
     if (cellRef.current){
-      let timeout = null;
-      ro = new ResizeObserver(entries => {
-        // console.log('触发监听',entries)
-        for (let entry of entries) {
-          // console.log('entry', entry.target.dataset.index, entry)
-          // queue.push(Number(entry.target.dataset.index))
-          // queue.sort((a, b) => a- b)
-          // console.log('queue', queue)
-        //   cancelAnimationFrame(timeout);
-        //   timeout = requestAnimationFrame(() => {
-        //     itemUpdated(parseInt(entry.target.dataset.index))
-        //   })
-          clearTimeout(timeout)
-          timeout = setTimeout(() => {
-            itemUpdated(index)
-          }, 16)
-        }
+      const ro = new ResizeObserver(entries => {
+        itemUpdated(index)
       })
       ro.observe(cellRef.current as Element)
-    }
-    return () => {
-        ro && ro.disconnect();
-        ro = null;
+      return () => ro.disconnect();
     }
   }, [cellRef.current])
 
@@ -110,7 +69,7 @@ export const Cell = React.forwardRef(({index, columnWidth, screenRange, children
   const [screenTop, screenBottom] = screenRange;
   let isInScreen = false;
 
-  if (!rect?.top || ((top + (rect?.height || 0)) >= screenTop && top <= screenBottom)){
+  if (rect?.top === undefined || ((top + (rect?.height || 0)) >= screenTop && top <= screenBottom)){
     isInScreen = true;
   }
 
@@ -119,22 +78,36 @@ export const Cell = React.forwardRef(({index, columnWidth, screenRange, children
     return null;
   }
 
-  // 最右侧right需要设置为0
-  // 不可见元素用fixed定位
-  
+  let style: React.CSSProperties = {}
+  // 已经计算过位置
+  if (rect?.left !== undefined) {
+    style = {
+      position: 'absolute',
+      top: (rect?.top || 0) as number,
+    }
+    // 最右侧列设置right为0
+    if (rect.isLastColumn) {
+      style.right = 0;
+    } else {
+      style.left = rect.left;
+    }
+  // 初始化未计算过位置，将元素设置成不可见
+  } else {
+    style = {
+      position: 'fixed',
+      left: '200%',
+      top: '200%',
+    }
+  }
+  style.width = columnWidth;
 
   return <div
     ref={cellRef}
-    className='waterfall-item'
     data-index={index}
-    style={{
-      position: 'absolute',
-      left: (rect?.left !== undefined ? rect?.left : '-100%'),
-      top: (rect?.top || 0) as number,
-      width: columnWidth,
-      background: 'white',
-      overflow: 'hidden',
-  }}>{children}</div>
+    style={style}
+    >
+      {children}
+    </div>
 })
 
 
@@ -144,22 +117,21 @@ export const Cell = React.forwardRef(({index, columnWidth, screenRange, children
  * @param {number} columns - 列数
  * @param {number} gapX - 水平间隙
  * @param {number} gapY - 垂直间隙
- * @param {number} pageSize - 分页加载每页加载条数
+ * @param {number} pageSize - 分页加载每页加载条数,暂不支持
  */
-const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
+export const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   const {
     children,
     columns = 2,
     gapX: _gapX,
     gapY: _gapY,
-    initialNumToRender = 50,
     pageSize = 20,
     threshold = 250,
     bufferHeight = 500,
     throttleTime = 300,
     autoObserve = true,
+    sliceThreshold = 200,
     className,
-    virtualEnable=false,
     onScroll: _onScroll,
     ...restProps
   } = props;
@@ -168,19 +140,20 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   const gapY = typeof _gapY === 'number' ? _gapY : 0;
 
   // 记录列表容器高度，计算是否在屏幕内
-  let containerRect = useRef<{ width: number, height: number, columnWidth: number }>({
+  let containerRect = useRef<{ width: number, height: number, columnWidth: number, columnLeftMap: Record<number, number> }>({
     width: 0,
     height: 0,
     columnWidth: 0,
+    columnLeftMap: {}
   });
-  let [columnWidth, setColumnWidth] = useState(0);
   // 列表元素高度集合, value为最新拿到的元素高度，每次高度更新，将历史高度存入history,若当前拿到高度为历史高度，则直接取history中最新的高度
+  // history暂未使用，待废弃
   const heightCollect = useRef<Record<number, { value: number, history: number[] }>>({});
   // 瀑布流关键计算参数
   const stateRef = useRef<WaterfallState>({
     // 当前元素指针，每计算一个元素位置递增一次
     currentIndex: 0,
-
+    // 记录需要更新的最后元素下标，确保需要更新的元素全部都计算到
     endIndex: 0,
     // 元素位置数据数组
     rects: [],
@@ -201,17 +174,26 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   // 可视屏幕范围
   const [screenRange, setScreenRange] = useState<ScreenRangeType>([0, 0])
   // 加载批次
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+
+  const limitComputerCount = useRef(0);
 
   // 计算列表位置
   const computerRects = () => {
     const { currentIndex, columnsHeight } = stateRef.current;
     if (heightCollect.current[currentIndex] !== undefined && Array.isArray(columnsHeight[currentIndex])) {
+
+      // console.log('limitComputerCount',limitComputerCount.current, currentIndex)
+      // 支持计算任务分片执行，超过的放到下一次的更新队列中
+      if (limitComputerCount.current > sliceThreshold) {
+        limitComputerCount.current = 0;
+          updateIndexQueue.current.push(currentIndex);
+          runRefreshRects()
+        return;
+      }
+
       const currentColumnsHeight = [...columnsHeight[currentIndex]];
       // console.warn('开始计算第', currentIndex, '个元素计算位置', currentColumnsHeight)
-      if (!Array.isArray(currentColumnsHeight)) {
-        // console.log(columnsHeight,currentIndex, currentColumnsHeight)
-      }
       let asceColumns = [...currentColumnsHeight]
       asceColumns.sort((a,b) => a - b);
       const minColumnsIndex = currentColumnsHeight.findIndex(item => item === asceColumns[0]);
@@ -219,39 +201,34 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
       const mixHeight = currentColumnsHeight[minColumnsIndex];
       const currentTop = mixHeight === 0 ? mixHeight : mixHeight + gapY;
       currentColumnsHeight[minColumnsIndex] = currentTop + (heightCollect.current[currentIndex].value || 0);
-      // 计算每列宽度，需要减掉水平空隙
-      
-      let left = (gapX + containerRect.current.columnWidth) * minColumnsIndex
-      if (minColumnsIndex === columns - 1) {
-        left = containerRect.current.width - containerRect.current.columnWidth;
-      }
       // 计算是否在渲染屏幕内
       const [screenTop, screenBottom] = screenRange;
       // const isInsideScreen = ((currentTop + heightCollect.current[currentIndex].value) >= screenTop) && (currentTop <= screenBottom)
       // 如果是已计算过的元素，且距离超过屏幕底部1屏后面的元素不用计算
-    //   if (
-    //     Number(stateRef.current.rects[currentIndex]?.top) > 0
-    //     && currentIndex > stateRef.current.endIndex
-    //     && currentTop > screenBottom + containerRect.current.height
-    //   ) { 
-    //     console.log(currentIndex+'停止计算','超过一屏后面的元素且元素是计算过了的不用计算')
-    //     return 
-    //   }
+      // if (
+      //   Number(stateRef.current.rects[currentIndex]?.top) > 0
+      //   && currentIndex > stateRef.current.endIndex
+      //   && currentTop > screenBottom + containerRect.current.height
+      // ) { return }
 
       stateRef.current.rects[currentIndex] = {
         top: currentTop,
-        left: left,
-        width: containerRect.current.columnWidth,
+        left: containerRect.current.columnLeftMap[minColumnsIndex],
+        isLastColumn: minColumnsIndex === columns - 1,
         height: heightCollect.current[currentIndex].value,
-        // isInsideScreen,
       }
+
       stateRef.current.currentIndex = currentIndex + 1
       stateRef.current.columnsHeight[currentIndex + 1] = [...currentColumnsHeight]
-      setRects(JSON.parse(JSON.stringify(stateRef.current.rects)))
-      console.warn('计算结束第', currentIndex, '个元素计算位置', stateRef.current.currentIndex, stateRef.current.rects[currentIndex],asceColumns, minColumnsIndex)
-      computerRects();
-    } else {
-      // console.log(`${currentIndex}停止计算，Array.isArray(columnsHeight[currentIndex])=${Array.isArray(columnsHeight[currentIndex])}`)
+      setRects([...stateRef.current.rects])
+      // console.warn('计算结束第', currentIndex, '个元素计算位置', stateRef.current.rects[currentIndex],asceColumns, minColumnsIndex)
+      try {
+        limitComputerCount.current += 1;
+        computerRects();
+      } catch(e) {
+        // console.log('内存溢出')
+      }
+
     }
   }
 
@@ -259,27 +236,17 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   const refreshRects = () => {
     if (updateIndexQueue.current.length > 0) {
       updateIndexQueue.current.sort((a, b) => a - b);
-      // console.log('更新队列updateIndexQueue.current', updateIndexQueue.current, heightCollect.current)
       stateRef.current.currentIndex = updateIndexQueue.current[0]
       stateRef.current.endIndex = updateIndexQueue.current[updateIndexQueue.current.length - 1];
+      // console.log('开始：', stateRef.current.currentIndex,' 结束：', stateRef.current.endIndex, updateIndexQueue.current)
       updateIndexQueue.current = [];
+      limitComputerCount.current = 0;
       computerRects();
+      limitComputerCount.current = 0;
     }
   }
 
-
-  const { run: runRefreshRects } = useThrottleFn(refreshRects, { wait: throttleTime })
-
-
-  const findWaterfallItem: any = (target: any) => {
-    if (target.className === 'waterfall-item') {
-      return target;
-    } else if (target.parentElement){
-      return findWaterfallItem(target.parentElement)
-    } else {
-      return null;
-    }
-  }
+  const { run: runRefreshRects } = useThrottleFn(refreshRects, { wait: throttleTime, leading: false })
 
   // 获取屏幕高度
   const getContainerHeight = (ref: HTMLDivElement | null) => {
@@ -288,32 +255,16 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
       if (containerRect.current.height !== rect.height) {
         containerRect.current.height = rect.height;
         containerRect.current.width = rect.width;
-        containerRect.current.columnWidth = Number(((containerRect.current.width - ((columns - 1) * gapX)) / columns).toFixed(0));
+        // 计算列宽
+        containerRect.current.columnWidth = Number(((containerRect.current.width - ((columns - 1) * gapX)) / columns));
+        // 计算每列对应的left值
+        new Array(columns).fill(0).forEach((_, index) => {
+          containerRect.current.columnLeftMap[index] = (gapX + containerRect.current.columnWidth) * index
+        })
         setScreenRange([0, containerRect.current.height])
-        setColumnWidth(containerRect.current.columnWidth);
       }
     }
   }
-
-  const scrollHandle = (e) => {
-    const screenTop = e.nativeEvent.target.scrollTop - bufferHeight;
-    const screenBottom = e.nativeEvent.target.scrollTop + containerRect.current.height + bufferHeight
-    setScreenRange([screenTop, screenBottom])
-    // 最后一个元素距离页面底部半屏时
-    // console.log('setPage', Number(stateRef.current.rects[page * pageSize - 1]?.top), (screenBottom + (containerRect.current.height / 2)))
-    if (
-      React.Children.count(children) > initialNumToRender + page * pageSize
-      && stateRef.current.rects[initialNumToRender + page * pageSize - 1]
-      ) {
-        const { top = 0, height = 0 } = stateRef.current.rects[initialNumToRender + page * pageSize - 1];
-        if ((top + height) < (screenBottom + threshold)) {
-          console.log('setPage + 1', page + 1)
-          setPage(page + 1)
-        }
-    }
-  }
-
-  const { run: runScroll } = useThrottleFn(scrollHandle, { wait: 500 })
 
   // 滚动实时获取可视屏幕范围
   const onScroll = (e: any) => {
@@ -321,20 +272,37 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
       _onScroll(e);
     }
     // console.log('ScreenRange', [e.nativeEvent.target.scrollTop, e.nativeEvent.target.scrollTop + containerRect.current.height])
-    runScroll(e)
+    const screenTop = e.nativeEvent.target.scrollTop - bufferHeight;
+    const screenBottom = e.nativeEvent.target.scrollTop + containerRect.current.height + bufferHeight
+    setScreenRange([screenTop, screenBottom])
+    // 最后一个元素距离页面底部半屏时
+    // console.log('setPage', Number(stateRef.current.rects[page * pageSize - 1]?.top), (screenBottom + (containerRect.current.height / 2)))
+    if (
+      pageSize !== null
+      && React.Children.count(children) > page * pageSize
+      && stateRef.current.rects[page * pageSize - 1]
+      ) {
+        const { top = 0, height = 0 } = stateRef.current.rects[page * pageSize - 1];
+        if ((top + height) < (screenBottom + threshold)) {
+          // console.log('setPage + 1', page + 1)
+          setPage(page + 1)
+        }
+
+    }
   }
 
   // 列表项渲染完成后计算位置
   const itemLoaded = (index: number) => {
     if (cellRefs.current[index] && heightCollect.current[index] === undefined) {
       const rect = cellRefs.current[index].getBoundingClientRect();
-      // console.log('第',index,'个元素加载完成',rect, containerRect.current.columnWidth);
-      const scaleHeight = rect.width ? rect.height / rect.width * containerRect.current.columnWidth : 0;
+      // console.log('第',index,'个元素加载完成',rect);
       heightCollect.current[index] = {
-        value: scaleHeight,
-        history: [scaleHeight]
+        value: rect.height,
+        history: [rect.height]
       }
+      limitComputerCount.current = 0;
       computerRects()
+      limitComputerCount.current = 0;
     }
   }
 
@@ -342,59 +310,26 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   // 列表项高度更新，重新计算瀑布流
   const itemUpdated = (index: number) => {
     if (index !==undefined && cellRefs.current[index]) {
-      // console.log('itemUpdated', index);
-      
       const rect = cellRefs.current[index].getBoundingClientRect();
-      // console.log('itemUpdated', index ,rect, heightCollect.current[index]?.history)
-      // const last = heightCollect.current[index].history[heightCollect.current[index].history.length - 1] !== rect.height
-      // 如果和最后一个历史高度不一样说明高度更新了，需要刷新瀑布流
-      if (
-        Array.isArray(heightCollect.current[index]?.history)
-        && heightCollect.current[index].history[heightCollect.current[index].history.length - 1] !== rect.height
+      if (heightCollect.current[index] === undefined) {
+        heightCollect.current[index] = {
+          value: rect.height,
+          history: [rect.height]
+        }
+        updateIndexQueue.current.push(index);
+        runRefreshRects()
+      } else if (
+        heightCollect.current[index]?.value !== undefined
+        && rect.height !== heightCollect.current[index].value
       ) {
-        console.log('itemUpdated runRefreshRects', index, heightCollect.current[index].history, rect);
+        // console.log('itemUpdated2', index, rect, heightCollect.current[index])
         heightCollect.current[index].value = rect.height;
         heightCollect.current[index].history.push(rect.height);
         updateIndexQueue.current.push(index);
         runRefreshRects()
       }
-    } else {
-      console.warn('第', index, '元素未获取到')
     }
   }
-
-  // useEffect(() => {
-  //   if (document.querySelector(`.${classPrefix}`)){
-  //     console.log('建立监听')
-  //     const ro = new ResizeObserver(enties => {
-  //       console.log('触发监听',enties)
-  //     })
-  //     ro.observe(document.querySelector(`.${classPrefix}`) as Element)
-  //   }
-  // }, [])
-
-  // const onObserver = (mutationsList: MutationRecord[], observer: MutationObserver) => {
-  //   for (let mutation of mutationsList) {
-  //     if ((mutation.target as any)?.className !== classPrefix && mutation.target.parentElement?.className !== classPrefix) {
-  //       // console.log('监听item', item);
-  //       const item = findWaterfallItem(mutation.target);
-  //       if (item) {
-  //         // console.log('监听item', item);
-  //         setTimeout(() => itemUpdated(Number(item.dataset.index)), 1600)
-  //       }
-  //     }
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   console.log('MutationObserver');
-  //   if (autoObserve && document.querySelector(`.${classPrefix}`)) {
-  //     const observer = new MutationObserver(onObserver as MutationCallback);
-  //     observer.observe(document.querySelector(`.${classPrefix}`) as Element, { subtree: true, childList: true, attributeOldValue: true, attributes: true });
-  //     return () => observer.disconnect();
-  //   }
-  // }, [])
-
 
   // 对外暴露方法
   useImperativeHandle(ref, () => {
@@ -404,14 +339,15 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
   }, [])
 
   const childrens = React.Children.map(children, (child, index) => {
-    if (index < (initialNumToRender + pageSize * page)) {
+    // pageSize为null禁用分页加载
+    if (pageSize === null || index < pageSize * page) {
       return <Cell
+        columnWidth={containerRect.current.columnWidth}
         ref={(ref: HTMLDivElement) => cellRefs.current[index] = ref}
         key={index}
         index={index}
         screenRange={screenRange}
         rect={rects[index]}
-        columnWidth={columnWidth}
         itemLoaded={itemLoaded}
         itemUpdated={itemUpdated}
       >
@@ -421,19 +357,13 @@ const Waterfall = React.forwardRef((props: WaterfallProps, ref) => {
     return null
 
   })
-  const lastheightCollect = [...(stateRef.current.columnsHeight[React.Children.count(children) - 1] || [])];
-  lastheightCollect.sort((a,b) => a - b);
-  // const maxHeight = lastheightCollect[columns - 1];
 
   return <div
     ref={(ref) => getContainerHeight(ref)}
-    className={`waterfall ${className || ''}`}
+    className={classNames(classPrefix, className)}
     onScroll={onScroll}
     {...restProps}
     >
-      {/* <div style={{height: maxHeight, background: 'pink'}}></div> */}
       {childrens}
     </div>
 })
-
-export default Waterfall;
