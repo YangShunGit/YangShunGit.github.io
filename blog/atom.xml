@@ -2,11 +2,98 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://YangShunGit.github.io/blog</id>
     <title>个人知识库 Blog</title>
-    <updated>2021-08-26T00:00:00.000Z</updated>
+    <updated>2025-07-17T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://YangShunGit.github.io/blog"/>
     <subtitle>个人知识库 Blog</subtitle>
     <icon>https://YangShunGit.github.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[项目难点汇总：]]></title>
+        <id>https://YangShunGit.github.io/blog/2025/07/17/blog</id>
+        <link href="https://YangShunGit.github.io/blog/2025/07/17/blog"/>
+        <updated>2025-07-17T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[rn项目难点]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="rn项目难点">rn项目难点<a href="https://yangshungit.github.io/blog/2025/07/17/blog#rn%E9%A1%B9%E7%9B%AE%E9%9A%BE%E7%82%B9" class="hash-link" aria-label="Direct link to rn项目难点" title="Direct link to rn项目难点">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="大量注意事项容易造成奇怪的问题">大量注意事项，容易造成奇怪的问题<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E5%A4%A7%E9%87%8F%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%AE%B9%E6%98%93%E9%80%A0%E6%88%90%E5%A5%87%E6%80%AA%E7%9A%84%E9%97%AE%E9%A2%98" class="hash-link" aria-label="Direct link to 大量注意事项，容易造成奇怪的问题" title="Direct link to 大量注意事项，容易造成奇怪的问题">​</a></h3>
+<ol>
+<li>没有固定定位 position: 'fixed' 无效</li>
+<li>绝对定位元素高度高于父级元素，超出部分会被隐藏</li>
+<li>ios  设置backgroundColor后borderRadius失效，overflow<!-- -->:hidden<!-- -->可以解决</li>
+<li>position: 'absolute' 和 display: 'none'， 同时使用，display:'none'无效</li>
+<li>scrollView需要设置背景样式，vivo会有滚动样式兼容问题</li>
+<li>没有设置具体height的情况下，部分手机（魅族mx6），设置borderRadius后backgroundColor会失效，需要分两个容器分别设置圆角和背景</li>
+<li>远程调试模式下，定时器 动画等会失效，如果遇到有些api不好使，可以关掉远程调试再试试</li>
+<li>webview需要增加一层View容器，并且设置宽高和overflow<!-- -->:hidden<!-- -->，否则部分手机可能有白屏问题</li>
+<li>webview渲染html，需要添加baseUrl:“/”，否则部分手机(魅族)出现html内的js脚本失效的问题</li>
+<li>无障碍，屏蔽掉textInput placeholder的默认朗读，添加importantForAccessibility="no"，如果外层有touch系列标签，也会屏蔽掉父级朗读，如果需要自定义朗读，可以在之间加一层view。</li>
+<li>不要随便打印事件回调里面的e，太大，可能导致rn崩掉</li>
+<li>无障碍模式下，Text包裹Text，里层的Text的onPress事件会失效(大部分手机)，将Text分开写即可解决</li>
+<li>无障碍，小心奇怪的字体会导致旁白无法识别，奇怪的字体也会导致部分手机(小米)显示异常</li>
+<li>无障碍，2后面跟汉字会读成两，解决办法在2后面添加，安卓可以加空格，ios加-</li>
+<li>display<!-- -->:none<!-- --> 如果View里面有文字，隐藏之后会有个不占位置同文字颜色一样的小点，，最后和opacity:0 配合使用。</li>
+<li>多行Text如果有的手机会导致文字上或下被截，可以设置lineHeight解决。(部分1+手机多行文字会被截断)</li>
+<li>Text ios手机会自带比fontSize高3-4个单位的（大概1.5倍，需要用手机测试获取默认的lineHeight高度）
+ios:  height -&gt; lineHeight
+5 -&gt;  8<br>
+<!-- -->10 -&gt; 15<br>
+<!-- -->20 -&gt;  29</li>
+<li>Text文字上下居中办法：<!-- -->
+<ol>
+<li>使用View flex实现上下居中</li>
+<li>仅ios, 如果View容器高度不满足ios文字默认的lineHeight高度时，需要添加lineHeight使文字上下居中, 如果View是定位元素，还需要添加height</li>
+</ol>
+</li>
+<li>祖先元素的圆角无法作用到当前图片，最好给图片父级元素添加圆角</li>
+<li>羊角符console.warn('￥', '¥')，使用后面这个，有的前面这个在华为手机有兼容问题</li>
+<li>Modal组件如果动画类型没有的时候，关闭的时候ios会闪一下，最好默认使用fade动画类型</li>
+<li>Text不允许设置边框，ios设置无效（需要设置两层容器，第一次容器将第二层容器设置成弹性容器，可以实现第二层容器自适应宽度，第二层容器来实现圆角和边框）</li>
+<li>焦点抢占问题，scrollView内input聚焦状态下，点击其他按钮，会触发input失焦事件，需要再次点击按钮触发点击，可以给scrollView添加keyboardShouldPersistTaps='awalys'，允许点击穿透，然后给整个页面添加点击事件，手动设置input失焦。</li>
+<li>ref.measure获取不到元素位置信息，给ref元素添加backgroundColor样式即可。</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="性能问题">性能问题<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98" class="hash-link" aria-label="Direct link to 性能问题" title="Direct link to 性能问题">​</a></h3>
+<p>列表拖拽交换位置，拖拽至容器边界时触发自动滚动，把位置更新设置成16ms，安卓运行正常，但iphone(7)会明显卡顿
+最后只实现了交换位置，没有边界自动滚动功能</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="动画问题">动画问题<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E5%8A%A8%E7%94%BB%E9%97%AE%E9%A2%98" class="hash-link" aria-label="Direct link to 动画问题" title="Direct link to 动画问题">​</a></h3>
+<p>ios和安卓动画执行表现不一致，当页面发生跳转时（打开新的activity,不是路由间跳转）触发动画，安卓动画会暂停，而ios会执行完动画，返回页面时会看到安卓后面的动画执行，体验不好。
+优化：等动画执行完之后在跳转，动画的start回调中监听finished为ture</p>
+<p>多个动画同时触发时卡顿，比如一个列表可以左滑展开操作按钮，先左滑一个列表项，再左滑另一个列表项，需要先关闭前一个列表项，且同时展开当前列表项，动画执行卡顿。
+优化：把展开的左滑实例和位置不要放在组件内部状态中，直接放在global中，减少值的传递，动画明显流畅。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="各类兼容性问题">各类兼容性问题<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E5%90%84%E7%B1%BB%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98" class="hash-link" aria-label="Direct link to 各类兼容性问题" title="Direct link to 各类兼容性问题">​</a></h3>
+<p>华为P9圆角失效、华为荣耀magic4 1单位线条不展示等各种问题。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="小程序开发者工具难点">小程序开发者工具难点<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E9%9A%BE%E7%82%B9" class="hash-link" aria-label="Direct link to 小程序开发者工具难点" title="Direct link to 小程序开发者工具难点">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="主进程阻塞问题">主进程阻塞问题<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E4%B8%BB%E8%BF%9B%E7%A8%8B%E9%98%BB%E5%A1%9E%E9%97%AE%E9%A2%98" class="hash-link" aria-label="Direct link to 主进程阻塞问题" title="Direct link to 主进程阻塞问题">​</a></h3>
+<p>webpack运行小程序项目时，运行过程中ide整个页面无法点击
+优化：将webpack执行，放到work子进程中，通过ipc通信获取webpack执行进度信息。进程管理需要注意重新启动和运行失败都需要关闭子进程process.exit(1)。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="真机调试问题">真机调试问题<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98" class="hash-link" aria-label="Direct link to 真机调试问题" title="Direct link to 真机调试问题">​</a></h3>
+<p>adb获取设备列表失败问题
+安卓真机调试断联问题
+优化：直接断点调试adbkit源码，查看执行逻辑，发现是逻辑错误，修改源码修复</p>
+<p>devtool 点击元素选中按钮后模拟器页面无法点击：
+优化：最后采用了关闭“暂停状态覆盖”选项配置，参考<a href="https://github.com/electron/electron/issues/22340" target="_blank" rel="noopener noreferrer">https://github.com/electron/electron/issues/22340</a></p>
+<p>ios真机调试断联问题
+优化：直接断点调试iosUsbDebugger源码，发现CDP协议判断逻辑中属性名称错误 result.result 改成 result.result || result.properties，兼容两种属性取值。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="低代码项目">低代码项目<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E4%BD%8E%E4%BB%A3%E7%A0%81%E9%A1%B9%E7%9B%AE" class="hash-link" aria-label="Direct link to 低代码项目" title="Direct link to 低代码项目">​</a></h2>
+<p>环境搭建有版本依赖要求，依赖python  vs  nodejs
+需要熟悉opensumi源码和整体架构设计，集成开发方式、monaco编辑器api，因opensumi整体采用单BrowserWindow架构设计，所以如果需要新开一个窗口，需要自己用opensumi的规范重写一套启动逻辑，如果不符合规范就需要自己手写前后台通信和ioc容器设计。</p>
+<p>dsl规范设计，为了性能，将dsl设计成SchemaForm的数据结构，减少更新数据时数据转换逻辑。</p>
+<p>ast：需要熟悉ast解析、组合、生成有一定的了解。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="组件库">组件库<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E7%BB%84%E4%BB%B6%E5%BA%93" class="hash-link" aria-label="Direct link to 组件库" title="Direct link to 组件库">​</a></h2>
+<p>简单组件没什么难度，需要考虑边界问题，自测
+瀑布流组件比较有难度：因为瀑布流需要做虚拟列表和支持图片自适应
+瀑布流原理很简单，计算列高，往最短的列添加元素。
+虚拟列表设置可视区域，区域外的元素卸载掉，元素位置和可视区域比较，会导致瀑布流元素多次卸载和挂载，需要放置重复计算。
+支持图片，则需要监听图片的高度变化，ResizeObserver监听容器变化，图片异步加载特性，所以瀑布流并不是从上往下按顺序计算的，而是根据高度变化判断要更新哪些元素，需要做变化元素的收集，然后从最靠前的元素开始计算位置。</p>
+<p>最麻烦的一个问题，图片可能未加载就被滑出可视范围，当用户划回去，图片需要重新加载，意味着这个元素后面的元素全部都需要重新计算，所以需要对计算任务切片，每完成一个片段，给页面刷新的时间，再次继续计算。</p>
+<p>图片加载还有怪异的问题，第一次图片加载完后，页面会取缓存，有时候取缓存会很快，但偶尔取的很慢，就导致图片被重新加载了，重新加载会导致高度变化，触发更新。通过防抖解决图片重新加载的问题。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="vscode插件开发">vscode插件开发<a href="https://yangshungit.github.io/blog/2025/07/17/blog#vscode%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91" class="hash-link" aria-label="Direct link to vscode插件开发" title="Direct link to vscode插件开发">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="代码补全">代码补全<a href="https://yangshungit.github.io/blog/2025/07/17/blog#%E4%BB%A3%E7%A0%81%E8%A1%A5%E5%85%A8" class="hash-link" aria-label="Direct link to 代码补全" title="Direct link to 代码补全">​</a></h3>
+<div class="language-ts codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-ts codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 获取文档字符串内容</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> text </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> document</span><span class="token operator" style="color:#393A34">?.</span><span class="token function" style="color:#d73a49">getText</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">??</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">''</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// 获取鼠标偏移值</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> offset </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> document</span><span class="token operator" style="color:#393A34">?.</span><span class="token function" style="color:#d73a49">offsetAt</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">params</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">position</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">??</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">0</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// RegExp.exec() 循环匹配光标是否在样式书写范围内,在范围内则返回整个CompletionItem[]数据，vscode会自动匹配出对应的提示词</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="hover提示">hover提示<a href="https://yangshungit.github.io/blog/2025/07/17/blog#hover%E6%8F%90%E7%A4%BA" class="hash-link" aria-label="Direct link to hover提示" title="Direct link to hover提示">​</a></h3>
+<div class="language-ts codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-ts codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 需要返回提示内容和范围起点和终点</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// 判断hover是否在样式函数内</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// 找到对应的样式后，找到样式的名称，起点和终点</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// 根据起点和终点转成vscode的Range格式</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">range </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"> start</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> document</span><span class="token operator" style="color:#393A34">?.</span><span class="token function" style="color:#d73a49">positionAt</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">start</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> end</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> document</span><span class="token operator" style="color:#393A34">?.</span><span class="token function" style="color:#d73a49">positionAt</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">end</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// 再根据样式函数获取提示内容，return Hover格式的对象</span><br></span></code></pre></div></div>
+<p>思路简单，但是匹配规则和边界处理很复杂。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="taro">taro<a href="https://yangshungit.github.io/blog/2025/07/17/blog#taro" class="hash-link" aria-label="Direct link to taro" title="Direct link to taro">​</a></h2>
+<p>taro rn不能选择react-native版本，需要手动降级版本到和客户端版本一致，版本降级会导致依赖包版本不匹配，运行报错，需要分析依赖包之间的版本关系，找到合适的版本</p>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Welcome]]></title>
         <id>https://YangShunGit.github.io/blog/welcome</id>
